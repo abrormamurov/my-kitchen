@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .align-element {
+    @apply max-w-6xl mx-auto pl-3;
+  }
+}
+.soat {
+  background: #872779;
+  color: rgb(249, 245, 245);
+  border-radius: 8px;
+  padding: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+.soat2 {
+  background: #272a87;
+  color: rgb(249, 245, 245);
+  border-radius: 8px;
+  padding: 4px;
+  text-align: center;
+}
+.musir {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+body {
+  background: #d5d3d3;
+}
