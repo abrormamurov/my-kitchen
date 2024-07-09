@@ -1,3 +1,4 @@
+// pages/Register.jsx
 import React, { useEffect, useState } from "react";
 import { FormInput } from "../components";
 import { Form, useActionData } from "react-router-dom";
@@ -46,7 +47,7 @@ function Register() {
         );
       }
     }
-  }, [userData]);
+  }, [userData, register]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">

@@ -1,3 +1,4 @@
+// pages/Login.jsx
 import React, { useEffect, useState } from "react";
 import { FormInput } from "../components";
 import { Form, Link, useActionData } from "react-router-dom";
@@ -35,8 +36,8 @@ function Login() {
   }, [userData, loginUser]);
 
   return (
-    <div className=" grid grid-cols-1 lg:grid-cols-2 min-h-screen  ">
-      <div className="hidden lg:block h-full bg-amber-100  bg-[url('https://picsum.photos/1400/1800')] bg-center bg-cover"></div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+      <div className="hidden lg:block h-full bg-amber-100 bg-[url('https://picsum.photos/1400/1800')] bg-center bg-cover"></div>
       <div className="h-full grid place-items-center bg-slate-300 lg:bg-none bg-[url('https://picsum.photos/1400/1800')] bg-center bg-cover p-4 lg:p-0">
         <div className="card bg-base-100 w-full max-w-sm lg:w-96 shadow-xl p-8">
           <Form method="post" className="flex flex-col items-center gap-5">

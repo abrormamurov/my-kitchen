@@ -9,7 +9,7 @@ function FormInput({ type, name, label, className, onChange }) {
       <input
         type={type}
         placeholder="Type here"
-        className="input input-bordered w-full "
+        className={`input input-bordered w-full ${className}`}
         name={name}
         onChange={onChange}
       />

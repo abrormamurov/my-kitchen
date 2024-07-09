@@ -95,7 +95,7 @@ function CreateRecipe() {
             className="w-full max-w-md"
             name="ovqat"
             type="text"
-            label="Qayerga tegishli ovqat"
+            label="Notion"
           />
           <FormInput
             className="w-full max-w-md"
