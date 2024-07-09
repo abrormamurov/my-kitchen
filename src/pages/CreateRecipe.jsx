@@ -19,11 +19,17 @@ function CreateRecipe() {
   const [ingredients, setIngredients] = useState([]);
   const [ingredient, setIngredient] = useState("");
   const [method, setMethod] = useState("");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ingredientCounts, setIngredientCounts] = useState({}); // Default empty object
+  const [ingredientCounts, setIngredientCounts] = useState({});
+  const [errorStatus, setErrorStatus] = useState({
+    title: false,
+    ovqat: false,
+    cookingTime: false,
+    image: false,
+    method: false,
+    ingredients: false,
+  });
 
-  // Ingredients o'zgaruvchisi o'zgarganda ingredientCounts ni yangilash
   useEffect(() => {
     const counts = {};
     ingredients.forEach((ing) => {
@@ -54,15 +60,38 @@ function CreateRecipe() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData(e.target);
+    const title = formData.get("title");
+    const ovqat = formData.get("ovqat");
+    const cookingTime = formData.get("cookingTime");
+    const image = formData.get("image");
+    const methodValue = method;
+
+    const newErrorStatus = {
+      title: !title,
+      ovqat: !ovqat,
+      cookingTime: !cookingTime,
+      image: !image,
+      method: !methodValue,
+      ingredients: ingredients.length === 0,
+    };
+
+    setErrorStatus(newErrorStatus);
+
+    const hasError = Object.values(newErrorStatus).some((status) => status);
+
+    if (hasError) {
+      toast.error("Iltimos, barcha maydonlarni to'ldiring.");
+      return;
+    }
+
     try {
-      const formData = new FormData(e.target);
       formData.append("image", imageUrl);
       formData.append("ingredients", JSON.stringify(ingredients));
-      formData.append("method", method);
-      formData.append("ovqat", formData.get("ovqat")); // Add related dish to form data
+      formData.append("method", methodValue);
+      formData.append("ovqat", ovqat);
 
       await addKitchen(formData, user);
-
       toast.success("Oshxona muvaffaqiyatli qo'shildi!");
     } catch (error) {
       console.error("Oshxona qo'shishda xatolik:", error);
@@ -85,26 +114,33 @@ function CreateRecipe() {
           <h2 className="text-3xl font-semibold">Add New Recipe</h2>
 
           <FormInput
-            className="max-w-md w-full"
+            className={`max-w-md w-full ${
+              errorStatus.title ? "input-error" : ""
+            }`}
             name="title"
             type="text"
             label="Title"
           />
-
           <FormInput
-            className="w-full max-w-md"
+            className={`w-full max-w-md ${
+              errorStatus.ovqat ? "input-error" : ""
+            }`}
             name="ovqat"
             type="text"
             label="Notion"
           />
           <FormInput
-            className="w-full max-w-md"
+            className={`w-full max-w-md ${
+              errorStatus.cookingTime ? "input-error" : ""
+            }`}
             name="cookingTime"
             type="text"
             label="Cooking time"
           />
           <FormInput
-            className="w-full max-w-md"
+            className={`w-full max-w-md ${
+              errorStatus.image ? "input-error" : ""
+            }`}
             name="image"
             type="url"
             label="Image URL"
@@ -120,7 +156,11 @@ function CreateRecipe() {
             </div>
           )}
 
-          <div className="w-full max-w-md flex items-center">
+          <div
+            className={`w-full max-w-md flex items-center ${
+              errorStatus.ingredients ? "input-error" : ""
+            }`}
+          >
             <input
               type="text"
               value={ingredient}
@@ -148,7 +188,11 @@ function CreateRecipe() {
             )}
           </div>
 
-          <div className="w-full max-w-md">
+          <div
+            className={`w-full max-w-md ${
+              errorStatus.method ? "input-error" : ""
+            }`}
+          >
             <label htmlFor="method" className="block mb-2">
               Method:
             </label>
@@ -189,7 +233,6 @@ function CreateRecipe() {
         />
       )}
 
-      {/* Pie komponentini qo'shish */}
       <div className="w-auto">
         <h2 className="text-3xl font-semibold">Ingredients Pie Chart</h2>
         {Object.keys(ingredientCounts).length > 0 ? (
