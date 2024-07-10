@@ -4,9 +4,11 @@ import { useCollection } from "../hooks/useCollection";
 import useAddKitchen from "../hooks/useAddKitchen";
 import { FormInput, Modal } from "../components";
 import toast from "react-hot-toast";
+// import { useHistory } from "react-router-dom";
 import Pie from "../components/Pie";
 
 function CreateRecipe() {
+  // const history = useHistory();
   const { user } = useSelector((state) => state.user);
   const { data } = useCollection(
     "kitchen",
@@ -93,6 +95,9 @@ function CreateRecipe() {
 
       await addKitchen(formData, user);
       toast.success("Oshxona muvaffaqiyatli qo'shildi!");
+
+      // Redirect to home page after successful submission
+      // history.push("/");
     } catch (error) {
       console.error("Oshxona qo'shishda xatolik:", error);
       toast.error("Oshxona qo'shilmadi");
@@ -105,8 +110,8 @@ function CreateRecipe() {
   };
 
   return (
-    <div className="w-auto">
-      <div className=" p-8 max-w-7xl w-full">
+    <div className="w-auto flex flex-col items-center">
+      <div className="p-8 max-w-7xl w-full">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center w-full gap-5"
@@ -176,12 +181,15 @@ function CreateRecipe() {
               +
             </button>
           </div>
-          <div className="w-full max-w-xs mt-2">
+          <div className="w-full max-w-xs mt-2  flex int gap-3">
             {ingredients.length === 0 ? (
               <p>No ingredients yet</p>
             ) : (
               ingredients.map((ing, index) => (
-                <span key={index} className="block mb-1">
+                <span
+                  key={index}
+                  className="block mb-1 bg-gray-200 border-10 pb-1 border-gray-300 pl-4 pr-4 rounded-lg"
+                >
                   {ing}
                 </span>
               ))
@@ -209,14 +217,14 @@ function CreateRecipe() {
           <div>
             <button
               type="submit"
-              className="btn bg-primary w-40 text-white py-2 px-4 rounded-lg"
+              className="btn bg-primary w-56 text-white py-2 px-4 rounded-lg"
             >
               Apply
             </button>
             <button
               type="button"
               onClick={handlePreview}
-              className="btn bg-secondary w-40 text-white py-2 px-4 rounded-lg"
+              className="btn bg-secondary w-56 text-white py-2 px-4 rounded-lg"
             >
               Preview
             </button>
@@ -233,7 +241,15 @@ function CreateRecipe() {
         />
       )}
 
-      <div className="w-auto">
+      {/* <div className="w-auto">
+        <h2 className="text-3xl font-semibold">Ingredients Pie Chart</h2>
+        {Object.keys(ingredientCounts).length > 0 ? (
+          <Pie data={ingredientCounts} />
+        ) : (
+          <p>No ingredients added yet</p>
+        )}
+      </div> */}
+      <div className="w-auto items-center flex flex-col">
         <h2 className="text-3xl font-semibold">Ingredients Pie Chart</h2>
         {Object.keys(ingredientCounts).length > 0 ? (
           <Pie data={ingredientCounts} />

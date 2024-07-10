@@ -10,18 +10,20 @@ export const action = async ({ request }) => {
   let email = formData.get("email");
   let password = formData.get("password");
   let photoURL = formData.get("photoURL");
-  let displayName = formData.get("displayName");
-  return { email, password, photoURL, displayName };
+  let displayName = formData.get("firstName");
+  let lastName = formData.get("lastName");
+  return { email, password, photoURL, firstName, lastName };
 };
 
 function Register() {
   const userData = useActionData();
   const { register, isPending, registerWithGoogle } = useRegister();
   const [errorStatus, setErrorStatus] = useState({
-    displayName: false,
+    firstName: false,
     photoURL: false,
     email: false,
     password: false,
+    lastName: false,
   });
 
   useEffect(() => {
@@ -29,10 +31,12 @@ function Register() {
       const hasError =
         !userData.email ||
         !userData.password ||
-        !userData.displayName ||
-        !userData.photoURL;
+        !userData.firstName ||
+        !userData.photoURL ||
+        !userData.lastName;
       setErrorStatus({
-        displayName: !userData.displayName,
+        displayName: !userData.firstName,
+        lastName: !userData.lastName,
         photoURL: !userData.photoURL,
         email: !userData.email,
         password: !userData.password,
@@ -42,12 +46,13 @@ function Register() {
         register(
           userData.email,
           userData.password,
-          userData.displayName,
-          userData.photoURL
+          userData.firstName,
+          userData.photoURL,
+          userData.lastName
         );
       }
     }
-  }, [userData, register]);
+  }, [userData]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
@@ -56,30 +61,41 @@ function Register() {
         <div className="card bg-base-100 w-96 shadow-xl p-8">
           <Form method="post" className="flex flex-col items-center gap-5">
             <h1 className="text-3xl font-semibold">Register</h1>
-            <FormInput
-              type="text"
-              label="Display Name"
-              name="displayName"
-              className={errorStatus.displayName ? "input-error" : ""}
-            />
-            <FormInput
-              type="url"
-              label="Photo URL"
-              name="photoURL"
-              className={errorStatus.photoURL ? "input-error" : ""}
-            />
+            <div className="flex gap-3">
+              <FormInput
+                type="text"
+                label="First Name"
+                name="firstName"
+                className={errorStatus.firstName ? "input-error" : ""}
+              />
+              <FormInput
+                type="text"
+                label="Last Nme"
+                name="lastName"
+                className={errorStatus.lastName ? "input-error" : ""}
+              />
+            </div>
             <FormInput
               type="email"
               label="Email"
               name="email"
               className={errorStatus.email ? "input-error" : ""}
             />
-            <FormInput
-              type="password"
-              label="Password"
-              name="password"
-              className={errorStatus.password ? "input-error" : ""}
-            />
+            <div className="flex gap-3">
+              <FormInput
+                type="url"
+                label="Photo URL"
+                name="photoURL"
+                className={errorStatus.photoURL ? "input-error" : ""}
+              />
+
+              <FormInput
+                type="password"
+                label="Password"
+                name="password"
+                className={errorStatus.password ? "input-error" : ""}
+              />
+            </div>
             <div className="w-full">
               {!isPending && (
                 <button className="btn btn-primary btn-block">Register</button>

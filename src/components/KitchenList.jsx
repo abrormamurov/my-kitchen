@@ -28,20 +28,18 @@ function KitchenList({ kitchen }) {
       <Link to={`/kitchen/${kitchen.id}`}>
         <div>
           <h3 className="font-bold text-3xl">{kitchen.title}</h3>
-        </div>
-        <div>{kitchen.ovqat}</div>
-        <div>
+
           <h4 className="font-bold">Method:</h4>
           <div className="relative">
             <p className="max-h-24 overflow-auto pr-4">{kitchen.method}</p>
             <div className="absolute top-0 right-0 h-full w-2 bg-transparent"></div>
           </div>
         </div>
-        <div className="flex gap-3 justify-end">
+        <div className="flex gap-3 mb-3 justify-end">
           <p className="soat2 w-24">! NEW</p>
           <p className="soat w-32">⌚️ {kitchen.cooking} minutes</p>
         </div>
-        <div>
+        {/* <div>
           <h4 className="font-bold">Ingredients:</h4>
           {kitchen.ingredients && kitchen.ingredients.length > 0 ? (
             <ul className="list-disc list-inside flex gap-3">
@@ -52,11 +50,11 @@ function KitchenList({ kitchen }) {
           ) : (
             <p>No ingredients</p>
           )}
-        </div>
+        </div> */}
 
         <figure>
           {kitchen.image && (
-            <img src={kitchen.image} alt={kitchen.title} className="max-w-sm" />
+            <img src={kitchen.image} alt={kitchen.title} className="max-w-md" />
           )}
         </figure>
       </Link>

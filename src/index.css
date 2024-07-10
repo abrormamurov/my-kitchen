@@ -33,3 +33,6 @@
 body {
   background: #d5d3d3;
 }
+li {
+  list-style: none;
+}

@@ -14,7 +14,7 @@ function Pie({ data }) {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200,
+              width: 20,
             },
             legend: {
               position: "bottom",
@@ -30,7 +30,7 @@ function Pie({ data }) {
     return () => chart.destroy();
   }, [data]);
 
-  return <div id="pie-chart" className="w-auto h-96"></div>;
+  return <div id="pie-chart" className="w-96 items-center h-24"></div>;
 }
 
 export default Pie;

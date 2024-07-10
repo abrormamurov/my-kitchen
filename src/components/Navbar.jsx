@@ -4,27 +4,30 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import NavbarLinks from "./NavbarLinks";
 import { logout } from "../app/userSlice";
-import useWeather from "../hooks/useWeather"; // Import the custom hook
-
-const localStorageTheme = () => {
-  return localStorage.getItem("theme") || "light";
-};
+import useWeather from "../hooks/useWeather";
+import { SlBasket } from "react-icons/sl";
 
 function Novabar() {
+  const localStorageTheme = () => {
+    return localStorage.getItem("theme") || "light";
+  };
+
   const [theme, setTheme] = useState(localStorageTheme());
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const { weather, loading, error } = useWeather("Fergana"); // Use the custom hook
+  // const basketItems = useSelector((state) => state.basket.items);
+  const { weather, loading, error } = useWeather("Fergana");
 
   const darkMode = (e) => {
     if (e.target.checked) {
       setTheme("dark");
-      document.body.classList.add("dark"); // Add 'dark' class to body
-      document.body.style.background = "black"; // Change body background color
+      document.body.classList.add("dark");
+      document.body.style.background = "black";
     } else {
       setTheme("light");
-      document.body.classList.remove("dark"); // Remove 'dark' class from body
-      document.body.style.background = "#d5d3d3"; // Change body background color
+      document.body.classList.remove("dark");
+      document.body.style.background = "#d5d3d3";
     }
   };
 
@@ -43,7 +46,7 @@ function Novabar() {
   return (
     <nav className="navbar bg-base-300 max-w-full mx-auto px-4 lg:px-8">
       <div className="navbar-start">
-        <div className="dropdown ">
+        <div className="dropdown">
           <div tabIndex={0} role="button" className="btn m-1">
             <Link to="/">Mykitchen</Link>
           </div>
@@ -66,11 +69,11 @@ function Novabar() {
           ) : (
             <>
               <img
-                src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                src={`http://openweathermap.org/img/wn/${weather.weather[0]?.icon}@2x.png`}
                 alt="Weather Icon"
                 className="w-8 h-8"
               />
-              <p>{weather.main.temp}°C in Fergana</p>
+              <p>{weather.main?.temp}°C in Fergana</p>
             </>
           )}
         </div>
@@ -107,11 +110,44 @@ function Novabar() {
             <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
           </svg>
         </label>
-
+        <div>
+          <SlBasket
+            className="w-7 h-7"
+            onClick={() => setShowDetailModal(true)}
+          />
+        </div>
         <button onClick={handleLogOut} className="btn btn-ghost">
           Logout
         </button>
       </div>
+
+      {showDetailModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="bg-white p-4 rounded shadow-lg w-1/3">
+            <div className="flex justify-between items-center mb-4">
+              <h2>Savat</h2>
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="text-black"
+              >
+                &times;
+              </button>
+            </div>
+            {!basketItems || basketItems.length === 0 ? (
+              <p>Savatchangiz bo'sh</p>
+            ) : (
+              <ul>
+                {basketItems.map((item, index) => (
+                  <li key={index} className="mb-4">
+                    <h3 className="font-bold">{item.title}</h3>
+                    <img src={item.image} alt={item.title} className="w-full" />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

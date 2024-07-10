@@ -7,3 +7,4 @@ export { default as Modal } from "./Modal";
 export { default as KitchenDetail } from "./KitchenDetail";
 export { default as Pie } from "./Pie";
 export { default as Charts } from "./Charts";
+export { default as ModalNav } from "./ModalNav";
