@@ -4,6 +4,9 @@ import { FormInput } from "../components";
 import { Form, Link, useActionData } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 import { useRegister } from "../hooks/useRegister";
+import { IoLogoGoogle } from "react-icons/io";
+import { IoLogInSharp } from "react-icons/io5";
+import { BiSolidRegistered } from "react-icons/bi";
 
 export const action = async ({ request }) => {
   let formData = await request.formData();
@@ -36,63 +39,80 @@ function Login() {
   }, [userData, loginUser]);
 
   return (
-    <div className="login-page grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-      <div className="hidden lg:block h-full bg-amber-100 bg-[url('https://picsum.photos/1400/1800')] bg-center bg-cover"></div>
-      <div className="h-full grid place-items-center bg-slate-300 lg:bg-none bg-[url('https://picsum.photos/1400/1800')] bg-center bg-cover p-4 lg:p-0">
-        <div className="card bg-base-100 w-full max-w-sm lg:w-96 shadow-xl p-8 relative">
-          <Form method="post" className="flex flex-col items-center gap-5">
-            <h1 className="text-3xl font-semibold">Login</h1>
-            <FormInput
-              type="email"
-              label="Email"
-              name="email"
-              className={errorStatus.email ? "input-error" : ""}
-            />
-            <FormInput
-              type="password"
-              label="Password"
-              name="password"
-              className={errorStatus.password ? "input-error" : ""}
-            />
-            <div className="w-full">
-              {!isPending && (
-                <button className="btn btn-primary btn-block">Login</button>
-              )}
-              {isPending && (
-                <button disabled className="btn btn-primary btn-block">
-                  ...Loading...
-                </button>
-              )}
-            </div>
-          </Form>
-          {isPendingGoogleRegister && (
-            <div className="w-full mt-5 mb-5">
-              <button
-                onClick={registerWithGoogle}
-                disabled
-                className="btn btn-secondary btn-block"
-              >
-                Loading...
+    <div className="login-page   lg:grid-cols-2 min-h-screen items-center flex justify-center">
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src="/public/video.mp4"
+        autoPlay
+        loop
+        muted
+      />
+      <video
+        className="absolute inset-0 w-full h-full object-cover lg:hidden"
+        src="/videos/login-background.mp4"
+        autoPlay
+        loop
+        muted
+      />
+      <div className="card glass w-full max-w-md lg:w-96  shadow-xl p-8 ">
+        <Form method="post" className="flex flex-col items-center gap-5">
+          <h1 className="text-3xl font-semibold">Login</h1>
+          <FormInput
+            type="email"
+            label="Email"
+            name="email"
+            className={errorStatus.email ? "input-error" : ""}
+          />
+          <FormInput
+            type="password"
+            label="Password"
+            name="password"
+            className={errorStatus.password ? "input-error" : ""}
+          />
+          <div className="w-full">
+            {!isPending && (
+              <button className="btn btn-primary btn-block">
+                {" "}
+                <IoLogInSharp className="w-6 h-6" />
+                Login
               </button>
-            </div>
-          )}
-          {!isPendingGoogleRegister && (
-            <div className="w-full mt-5 mb-5">
-              <button
-                onClick={registerWithGoogle}
-                className="btn btn-secondary btn-block"
-              >
-                Google
+            )}
+            {isPending && (
+              <button disabled className="btn btn-primary btn-block">
+                ...Loading...
               </button>
-            </div>
-          )}
-          <h2 className="text-center font-medium">
-            Don't have an account?{" "}
-            <Link className="link link-primary" to="/register">
-              Register
-            </Link>
-          </h2>
-        </div>
+            )}
+          </div>
+        </Form>
+        {isPendingGoogleRegister && (
+          <div className="w-full mt-5 mb-5">
+            <button
+              onClick={registerWithGoogle}
+              disabled
+              className="btn btn-secondary btn-block"
+            >
+              Loading...
+            </button>
+          </div>
+        )}
+        {!isPendingGoogleRegister && (
+          <div className="w-full mt-5 mb-5">
+            <button
+              onClick={registerWithGoogle}
+              className="btn btn-secondary btn-block"
+            >
+              <IoLogoGoogle className="w-6 h-6" />
+              Google
+            </button>
+          </div>
+        )}
+        <h2 className="text-center font-medium flex justify-center ">
+          Don't have an account?{" "}
+          <Link className="link link-primary flex" to="/register">
+            Register
+            <BiSolidRegistered />
+          </Link>
+        </h2>
       </div>
     </div>
   );
