@@ -210,7 +210,7 @@ function CreateRecipe() {
               value={method}
               onChange={handleMethodChange}
               placeholder="Enter method of meal"
-              className="w-full py-2 border rounded"
+              className="w-full py-2 border rounded "
             ></textarea>
           </div>
 
@@ -238,6 +238,7 @@ function CreateRecipe() {
           ingredients={ingredients}
           method={method}
           onClose={() => setIsModalOpen(false)}
+          className="w-full"
         />
       )}
 

@@ -47,8 +47,12 @@ function Novabar() {
     <nav className="navbar bg-base-300 max-w-full mx-auto px-4 lg:px-8">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn m-1">
-            <Link to="/">Mykitchen</Link>
+          <div className="video-button-container">
+            <div tabIndex={0} role="button" className="btn m-1 glass">
+              <Link to="/" className="video-button-text">
+                Mykitchen
+              </Link>
+            </div>
           </div>
           <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
             <NavbarLinks />
